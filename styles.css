@@ -173,6 +173,69 @@ img {
   cursor: pointer;
 }
 
+/* Añadir estilos para el menú de usuario */
+.user-menu {
+  position: relative;
+}
+
+.user-menu-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.user-menu-toggle:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+.user-name {
+  font-weight: 600;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 200px;
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  display: none;
+  z-index: 1000;
+}
+
+.user-dropdown.active {
+  display: block;
+}
+
+.user-dropdown li {
+  list-style: none;
+}
+
+.user-dropdown li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  color: var(--text-color);
+  transition: var(--transition);
+}
+
+.user-dropdown li a:hover {
+  background-color: #f8f9fa;
+  color: var(--primary-color);
+}
+
+.user-dropdown li a i {
+  width: 20px;
+  text-align: center;
+}
+
 /* Sección Hero */
 .hero {
   padding: 80px 0;

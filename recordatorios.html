@@ -1,310 +1,296 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis Recordatorios - MEDITIME</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="recordatorios.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis Recordatorios - MEDITIME</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="recordatorios.css">
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <img src="/placeholder.svg?height=50&width=50" alt="">
-                <h1>MEDITIME</h1>
-            </div>
-            <ul class="nav-links">
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="recordatorios.html" class="active">Mis Recordatorios</a></li>
-                <li><a href="calendario.html">Calendario</a></li>
-                <li><a href="contacto.html">Contacto</a></li>
-            </ul>
-            <div class="menu-toggle">
-                <i class="fas fa-bars"></i>
-            </div>
-        </div>
-    </nav>
+  <!-- Barra de navegación -->
+  <nav class="navbar">
+      <div class="container">
+          <div class="logo">
+              <img src="/placeholder.svg?height=50&width=50" alt="">
+              <h1>MEDITIME</h1>
+          </div>
+          <ul class="nav-links">
+              <li><a href="index.html">Inicio</a></li>
+              <li><a href="recordatorios.html" class="active">Mis Recordatorios</a></li>
+              <li><a href="calendario.html">Calendario</a></li>
+              <li><a href="contacto.html">Contacto</a></li>
+          </ul>
+          <div class="menu-toggle">
+              <i class="fas fa-bars"></i>
+          </div>
+      </div>
+  </nav>
 
-    <!-- Contenido principal -->
-    <main>
-        <section class="page-header">
-            <div class="container">
-                <h2>Mis Recordatorios de Medicamentos</h2>
-                <p>Gestione sus medicamentos y recordatorios en un solo lugar</p>
-            </div>
-        </section>
+  <!-- Contenido principal -->
+  <main>
+      <section class="page-header">
+          <div class="container">
+              <h2>Mis Recordatorios de Medicamentos</h2>
+              <p>Gestione sus medicamentos y recordatorios en un solo lugar</p>
+          </div>
+      </section>
 
-        <section class="recordatorios-section">
-            <div class="container">
-                <div class="recordatorios-grid">
-                    <!-- Panel de recordatorios -->
-                    <div class="recordatorios-panel">
-                        <div class="panel-header">
-                            <h3>Mis Medicamentos</h3>
-                            <button id="add-med-btn" class="btn btn-primary">
-                                <i class="fas fa-plus"></i> Añadir Medicamento
-                            </button>
-                        </div>
+      <section class="recordatorios-section">
+          <div class="container">
+              <div class="recordatorios-grid">
+                  <!-- Panel de recordatorios -->
+                  <div class="recordatorios-panel">
+                      <div class="panel-header">
+                          <h3>Mis Medicamentos</h3>
+                          <button id="add-med-btn" class="btn btn-primary">
+                              <i class="fas fa-plus"></i> Añadir Medicamento
+                          </button>
+                      </div>
 
-                        <!-- Filtros -->
-                        <div class="filtros">
-                            <button class="filtro-btn active" data-filter="todos">Todos</button>
-                            <button class="filtro-btn" data-filter="pendientes">Pendientes</button>
-                            <button class="filtro-btn" data-filter="completados">Completados</button>
-                        </div>
+                      <!-- Filtros -->
+                      <div class="filtros">
+                          <button class="filtro-btn active" data-filter="todos">Todos</button>
+                          <button class="filtro-btn" data-filter="pendientes">Pendientes</button>
+                          <button class="filtro-btn" data-filter="completados">Completados</button>
+                      </div>
 
-                        <!-- Lista de recordatorios -->
-                        <div class="recordatorios-lista" id="recordatorios-container">
-                            <!-- Los recordatorios se cargarán aquí -->
-                            <div class="recordatorio-item" data-estado="pendiente">
-                                <div class="recordatorio-hora">
-                                    <span class="hora">08:00</span>
-                                </div>
-                                <div class="recordatorio-info">
-                                    <h4>Paracetamol</h4>
-                                    <p>1 pastilla con el desayuno</p>
-                                </div>
-                                <div class="recordatorio-acciones">
-                                    <button class="btn-accion btn-completar" aria-label="Marcar como completado">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-accion btn-editar" aria-label="Editar recordatorio">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-accion btn-eliminar" aria-label="Eliminar recordatorio">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
+                      <!-- Lista de recordatorios -->
+                      <div class="recordatorios-lista" id="recordatorios-container">
+                          <!-- Los recordatorios se cargarán aquí dinámicamente -->
+                          
+                          <!-- Mensaje cuando no hay recordatorios -->
+                          <div id="no-recordatorios" class="no-recordatorios" style="display: none;">
+                              <i class="fas fa-pills"></i>
+                              <p>No tiene recordatorios en este momento</p>
+                              <button id="add-first-med" class="btn btn-primary">Añadir su primer medicamento</button>
+                          </div>
+                      </div>
+                  </div>
 
-                            <div class="recordatorio-item" data-estado="pendiente">
-                                <div class="recordatorio-hora">
-                                    <span class="hora">13:00</span>
-                                </div>
-                                <div class="recordatorio-info">
-                                    <h4>Ibuprofeno</h4>
-                                    <p>1 pastilla después del almuerzo</p>
-                                </div>
-                                <div class="recordatorio-acciones">
-                                    <button class="btn-accion btn-completar" aria-label="Marcar como completado">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-accion btn-editar" aria-label="Editar recordatorio">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-accion btn-eliminar" aria-label="Eliminar recordatorio">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
+                  <!-- Panel de información y ayuda -->
+                  <div class="info-panel">
+                      <!-- Calendario pequeño -->
+                      <div class="info-card">
+                          <h3>Calendario</h3>
+                          <div id="mini-calendario"></div>
+                      </div>
 
-                            <div class="recordatorio-item" data-estado="completado">
-                                <div class="recordatorio-hora">
-                                    <span class="hora">20:00</span>
-                                </div>
-                                <div class="recordatorio-info">
-                                    <h4>Vitamina D</h4>
-                                    <p>1 cápsula con la cena</p>
-                                </div>
-                                <div class="recordatorio-acciones">
-                                    <button class="btn-accion btn-completar completado" aria-label="Marcar como pendiente">
-                                        <i class="fas fa-check"></i>
-                                    </button>
-                                    <button class="btn-accion btn-editar" aria-label="Editar recordatorio">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn-accion btn-eliminar" aria-label="Eliminar recordatorio">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </div>
+                      <div class="info-card">
+                          <h3>Consejos útiles</h3>
+                          <ul class="tips-list">
+                              <li>
+                                  <i class="fas fa-clock"></i>
+                                  <div>
+                                      <h4>Establezca horarios regulares</h4>
+                                      <p>Tomar sus medicamentos a la misma hora cada día ayuda a crear un hábito.</p>
+                                  </div>
+                              </li>
+                              <li>
+                                  <i class="fas fa-utensils"></i>
+                                  <div>
+                                      <h4>Asocie con las comidas</h4>
+                                      <p>Relacione sus medicamentos con las comidas para recordarlos más fácilmente.</p>
+                                  </div>
+                              </li>
+                              <li>
+                                  <i class="fas fa-bell"></i>
+                                  <div>
+                                      <h4>Active las notificaciones</h4>
+                                      <p>Las alertas le ayudarán a recordar cuándo debe tomar su medicación.</p>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div>
 
-                            <!-- Mensaje cuando no hay recordatorios -->
-                            <div id="no-recordatorios" class="no-recordatorios" style="display: none;">
-                                <i class="fas fa-pills"></i>
-                                <p>No tiene recordatorios en este momento</p>
-                                <button id="add-first-med" class="btn btn-primary">Añadir su primer medicamento</button>
-                            </div>
-                        </div>
-                    </div>
+                      <div class="info-card">
+                          <h3>Estadísticas</h3>
+                          <div class="estadisticas">
+                              <div class="estadistica">
+                                  <div class="valor" id="porcentaje-cumplimiento">0%</div>
+                                  <div class="etiqueta">Cumplimiento</div>
+                              </div>
+                              <div class="estadistica">
+                                  <div class="valor" id="total-medicamentos">0</div>
+                                  <div class="etiqueta">Medicamentos</div>
+                              </div>
+                              <div class="estadistica">
+                                  <div class="valor" id="total-dosis">0</div>
+                                  <div class="etiqueta">Dosis diarias</div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
 
-                    <!-- Panel de información y ayuda -->
-                    <div class="info-panel">
-                        <!-- Nuevo: Calendario pequeño -->
-                        <div class="info-card">
-                            <h3>Calendario</h3>
-                            <div id="mini-calendario"></div>
-                        </div>
+      <!-- Modal para añadir/editar medicamento -->
+      <div id="med-modal" class="modal">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h3 id="modal-title">Añadir Nuevo Medicamento</h3>
+                  <button class="close-modal" aria-label="Cerrar">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+              <form id="med-form">
+                  <div class="form-group">
+                      <label for="med-nombre">Nombre del medicamento</label>
+                      <input type="text" id="med-nombre" name="nombre" required placeholder="Ej: Paracetamol">
+                  </div>
+                  <div class="form-group">
+                      <label for="med-dosis">Dosis</label>
+                      <input type="text" id="med-dosis" name="dosis" required placeholder="Ej: 1 pastilla">
+                  </div>
+                  <div class="form-group">
+                      <label for="med-frecuencia">Frecuencia</label>
+                      <select id="med-frecuencia" name="frecuencia" required>
+                          <option value="diario">Diario</option>
+                          <option value="dias-alternos">Días alternos</option>
+                          <option value="semanal">Semanal</option>
+                          <option value="personalizado">Personalizado</option>
+                      </select>
+                  </div>
+                  
+                  <!-- Selección de días de la semana (para frecuencia semanal) -->
+                  <div class="form-group" id="dias-semana-group" style="display: none;">
+                      <label>Días de la semana</label>
+                      <div class="dias-semana-selector">
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-lunes" name="dias-semana" value="1">
+                              <label for="dia-lunes">Lun</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-martes" name="dias-semana" value="2">
+                              <label for="dia-martes">Mar</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-miercoles" name="dias-semana" value="3">
+                              <label for="dia-miercoles">Mié</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-jueves" name="dias-semana" value="4">
+                              <label for="dia-jueves">Jue</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-viernes" name="dias-semana" value="5">
+                              <label for="dia-viernes">Vie</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-sabado" name="dias-semana" value="6">
+                              <label for="dia-sabado">Sáb</label>
+                          </div>
+                          <div class="dia-checkbox">
+                              <input type="checkbox" id="dia-domingo" name="dias-semana" value="0">
+                              <label for="dia-domingo">Dom</label>
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <!-- Selección de horas -->
+                  <div class="form-group">
+                      <label>Horas de toma</label>
+                      <div id="horas-container">
+                          <div class="hora-input">
+                              <input type="time" name="horas[]" required>
+                              <button type="button" class="btn-remove-hora" style="display: none;">
+                                  <i class="fas fa-minus-circle"></i>
+                              </button>
+                          </div>
+                      </div>
+                      <button type="button" id="add-hora-btn" class="btn btn-secondary btn-sm">
+                          <i class="fas fa-plus"></i> Añadir otra hora
+                      </button>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="med-instrucciones">Instrucciones adicionales</label>
+                      <textarea id="med-instrucciones" name="instrucciones" placeholder="Ej: Tomar con comida"></textarea>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="med-inicio">Fecha de inicio</label>
+                      <input type="date" id="med-inicio" name="inicio" required>
+                  </div>
+                  
+                  <div class="form-group">
+                      <label for="med-fin">Fecha de finalización (opcional)</label>
+                      <input type="date" id="med-fin" name="fin">
+                  </div>
+                  
+                  <div class="form-actions">
+                      <button type="button" class="btn btn-secondary" id="cancelar-btn">Cancelar</button>
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                  </div>
+              </form>
+          </div>
+      </div>
 
-                        <div class="info-card">
-                            <h3>Consejos útiles</h3>
-                            <ul class="tips-list">
-                                <li>
-                                    <i class="fas fa-clock"></i>
-                                    <div>
-                                        <h4>Establezca horarios regulares</h4>
-                                        <p>Tomar sus medicamentos a la misma hora cada día ayuda a crear un hábito.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fas fa-utensils"></i>
-                                    <div>
-                                        <h4>Asocie con las comidas</h4>
-                                        <p>Relacione sus medicamentos con las comidas para recordarlos más fácilmente.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <i class="fas fa-bell"></i>
-                                    <div>
-                                        <h4>Active las notificaciones</h4>
-                                        <p>Las alertas le ayudarán a recordar cuándo debe tomar su medicación.</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+      <!-- Modal de confirmación para eliminar -->
+      <div id="confirm-modal" class="modal">
+          <div class="modal-content confirm-content">
+              <div class="modal-header">
+                  <h3>Confirmar eliminación</h3>
+                  <button class="close-modal" aria-label="Cerrar">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+              <p>¿Está seguro de que desea eliminar este recordatorio?</p>
+              <div class="form-actions">
+                  <button type="button" class="btn btn-secondary" id="cancel-delete">Cancelar</button>
+                  <button type="button" class="btn btn-danger" id="confirm-delete">Eliminar</button>
+              </div>
+          </div>
+      </div>
+  </main>
 
-                        <div class="info-card">
-                            <h3>Estadísticas</h3>
-                            <div class="estadisticas">
-                                <div class="estadistica">
-                                    <div class="valor">75%</div>
-                                    <div class="etiqueta">Cumplimiento</div>
-                                </div>
-                                <div class="estadistica">
-                                    <div class="valor">3</div>
-                                    <div class="etiqueta">Medicamentos</div>
-                                </div>
-                                <div class="estadistica">
-                                    <div class="valor">5</div>
-                                    <div class="etiqueta">Dosis diarias</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <!-- Pie de página -->
+  <footer>
+      <div class="container">
+          <div class="footer-content">
+              <div class="footer-logo">
+                  <img src="/placeholder.svg?height=40&width=40" alt="">
+                  <h3>MEDITIME</h3>
+                  <p>Su asistente personal para medicamentos</p>
+              </div>
+              <div class="footer-links">
+                  <div class="footer-column">
+                      <h4>Navegación</h4>
+                      <ul>
+                          <li><a href="index.html">Inicio</a></li>
+                          <li><a href="recordatorios.html">Mis Recordatorios</a></li>
+                          <li><a href="calendario.html">Calendario</a></li>
+                          <li><a href="contacto.html">Contacto</a></li>
+                      </ul>
+                  </div>
+                  <div class="footer-column">
+                      <h4>Recursos</h4>
+                      <ul>
+                          <li><a href="ayuda.html">Ayuda</a></li>
+                          <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
+                          <li><a href="tutoriales.html">Tutoriales</a></li>
+                      </ul>
+                  </div>
+                  <div class="footer-column">
+                      <h4>Legal</h4>
+                      <ul>
+                          <li><a href="privacidad.html">Política de privacidad</a></li>
+                          <li><a href="terminos.html">Términos de uso</a></li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 MEDITIME. Todos los derechos reservados.</p>
+          </div>
+      </div>
+  </footer>
 
-        <!-- Modal para añadir/editar medicamento -->
-        <div id="med-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="modal-title">Añadir Nuevo Medicamento</h3>
-                    <button class="close-modal" aria-label="Cerrar">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <form id="med-form">
-                    <div class="form-group">
-                        <label for="med-nombre">Nombre del medicamento</label>
-                        <input type="text" id="med-nombre" name="nombre" required placeholder="Ej: Paracetamol">
-                    </div>
-                    <div class="form-group">
-                        <label for="med-dosis">Dosis</label>
-                        <input type="text" id="med-dosis" name="dosis" required placeholder="Ej: 1 pastilla">
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group" id="hora-group">
-                            <label for="med-hora">Hora</label>
-                            <input type="time" id="med-hora" name="hora" required>
-                        </div>
-                        <div class="form-group" id="horas-multiples-group" style="display: none;">
-                            <label for="med-horas-multiples">Horas múltiples</label>
-                            <div id="horas-container">
-                                <div class="hora-input">
-                                    <input type="time" name="horas-multiples[]" required>
-                                    <button type="button" class="btn-remove-hora">-</button>
-                                </div>
-                            </div>
-                            <button type="button" id="add-hora-btn" class="btn btn-secondary">Añadir hora</button>
-                        </div>
-                        <div class="form-group">
-                            <label for="med-frecuencia">Frecuencia</label>
-                            <select id="med-frecuencia" name="frecuencia" required>
-                                <option value="diario">Diario</option>
-                                <option value="dias-alternos">Días alternos</option>
-                                <option value="semanal">Semanal</option>
-                                <option value="personalizado">Personalizado</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="med-instrucciones">Instrucciones adicionales</label>
-                        <textarea id="med-instrucciones" name="instrucciones" placeholder="Ej: Tomar con comida"></textarea>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="cancelar-btn">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Modal de confirmación para eliminar -->
-        <div id="confirm-modal" class="modal">
-            <div class="modal-content confirm-content">
-                <div class="modal-header">
-                    <h3>Confirmar eliminación</h3>
-                    <button class="close-modal" aria-label="Cerrar">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                <p>¿Está seguro de que desea eliminar este recordatorio?</p>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" id="cancel-delete">Cancelar</button>
-                    <button type="button" class="btn btn-danger" id="confirm-delete">Eliminar</button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Pie de página -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="/placeholder.svg?height=40&width=40" alt="">
-                    <h3>MEDITIME</h3>
-                    <p>Su asistente personal para medicamentos</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Navegación</h4>
-                        <ul>
-                            <li><a href="index.html">Inicio</a></li>
-                            <li><a href="recordatorios.html">Mis Recordatorios</a></li>
-                            <li><a href="calendario.html">Calendario</a></li>
-                            <li><a href="contacto.html">Contacto</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Recursos</h4>
-                        <ul>
-                            <li><a href="ayuda.html">Ayuda</a></li>
-                            <li><a href="preguntas-frecuentes.html">Preguntas frecuentes</a></li>
-                            <li><a href="tutoriales.html">Tutoriales</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><a href="privacidad.html">Política de privacidad</a></li>
-                            <li><a href="terminos.html">Términos de uso</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 MEDITIME. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="script.js"></script>
-    <script src="recordatorios.js"></script>
+  <script src="script.js"></script>
+  <script src="auth.js"></script>
+  <script src="recordatorios.js"></script>
 </body>
 </html>
 
