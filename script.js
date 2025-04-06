@@ -102,6 +102,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const isAuthPage =
       window.location.pathname.includes("login.html") || window.location.pathname.includes("registro.html")
 
+    // Verificar si estamos en la página de inicio
+    const isHomePage =
+      window.location.pathname === "/" ||
+      window.location.pathname.endsWith("index.html") ||
+      window.location.pathname.endsWith("/")
+
+    // Verificar si estamos en la página de administración
+    const isAdminPage = window.location.pathname.includes("admin.html")
+
     // Obtener sesión
     const session = JSON.parse(localStorage.getItem("meditime_session") || "null")
 
@@ -110,9 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (isAuthPage) {
         window.location.href = "index.html"
       }
+
+      // Si está en la página de administración pero no es administrador, redirigir a la página principal
+      if (isAdminPage && session.isAdmin !== true) {
+        window.location.href = "index.html"
+      }
     } else {
-      // Si no está autenticado y no está en una página de autenticación, redirigir a login
-      if (!isAuthPage) {
+      // Si no está autenticado y no está en la página de inicio ni en una página de autenticación, redirigir a login
+      if (!isAuthPage && !isHomePage) {
         window.location.href = "login.html"
       }
     }
@@ -122,57 +136,92 @@ document.addEventListener("DOMContentLoaded", () => {
     // Obtener sesión
     const session = JSON.parse(localStorage.getItem("meditime_session") || "null")
 
-    if (!session) return
+    console.log("Sesión recuperada:", session) // Verificar la sesión recuperada
+    console.log("isAdmin en sesión:", session?.isAdmin, "tipo:", typeof session?.isAdmin) // Verificar el valor y tipo
 
     // Obtener elementos del DOM
     const navLinks = document.querySelector(".nav-links")
+    const authButtons = document.getElementById("auth-buttons")
 
     if (!navLinks) return
 
-    // Crear menú de usuario
-    const userMenu = document.createElement("li")
-    userMenu.className = "user-menu"
+    if (session) {
+      // Si el usuario está autenticado, ocultar botones de autenticación
+      if (authButtons) {
+        authButtons.style.display = "none"
+      }
 
-    userMenu.innerHTML = `
-      <div class="user-menu-toggle">
-        <span class="user-name">${session.nombre.split(" ")[0]}</span>
-        <i class="fas fa-user-circle"></i>
-        <i class="fas fa-chevron-down"></i>
-      </div>
-      <ul class="user-dropdown">
+      // Crear menú de usuario
+      const userMenu = document.createElement("li")
+      userMenu.className = "user-menu"
+
+      // Mostrar el nombre o el nombre completo si hay apellidos
+      const displayName = session.apellidos ? `${session.nombre} ${session.apellidos.charAt(0)}.` : session.nombre
+
+      // Preparar los elementos del menú
+      let menuItems = `
+        <li><a href="recordatorios.html"><i class="fas fa-pills"></i> Mis Recordatorios</a></li>
+        <li><a href="calendario.html"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
         <li><a href="#"><i class="fas fa-user"></i> Mi Perfil</a></li>
         <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
-        <li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
-      </ul>
-    `
+      `
 
-    navLinks.appendChild(userMenu)
+      // Añadir enlace al panel de administración si el usuario es administrador
+      if (session.isAdmin === true) {
+        // Usar comparación estricta
+        menuItems = `
+          <li><a href="admin.html"><i class="fas fa-users-cog"></i> Panel de Administración</a></li>
+          ${menuItems}
+        `
+      }
 
-    // Manejar clic en el menú de usuario
-    const userMenuToggle = userMenu.querySelector(".user-menu-toggle")
-    const userDropdown = userMenu.querySelector(".user-dropdown")
+      // Añadir opción de cerrar sesión
+      menuItems += `<li><a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>`
 
-    if (userMenuToggle && userDropdown) {
-      userMenuToggle.addEventListener("click", () => {
-        userDropdown.classList.toggle("active")
-      })
+      userMenu.innerHTML = `
+        <div class="user-menu-toggle">
+          <span class="user-name">${displayName}</span>
+          <i class="fas fa-user-circle"></i>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+        <ul class="user-dropdown">
+          ${menuItems}
+        </ul>
+      `
 
-      // Cerrar al hacer clic fuera
-      document.addEventListener("click", (e) => {
-        if (!userMenu.contains(e.target)) {
-          userDropdown.classList.remove("active")
-        }
-      })
-    }
+      navLinks.appendChild(userMenu)
 
-    // Manejar cerrar sesión
-    const logoutBtn = document.getElementById("logout-btn")
+      // Manejar clic en el menú de usuario
+      const userMenuToggle = userMenu.querySelector(".user-menu-toggle")
+      const userDropdown = userMenu.querySelector(".user-dropdown")
 
-    if (logoutBtn) {
-      logoutBtn.addEventListener("click", (e) => {
-        e.preventDefault()
-        logout()
-      })
+      if (userMenuToggle && userDropdown) {
+        userMenuToggle.addEventListener("click", () => {
+          userDropdown.classList.toggle("active")
+        })
+
+        // Cerrar al hacer clic fuera
+        document.addEventListener("click", (e) => {
+          if (!userMenu.contains(e.target)) {
+            userDropdown.classList.remove("active")
+          }
+        })
+      }
+
+      // Manejar cerrar sesión
+      const logoutBtn = document.getElementById("logout-btn")
+
+      if (logoutBtn) {
+        logoutBtn.addEventListener("click", (e) => {
+          e.preventDefault()
+          logout()
+        })
+      }
+    } else {
+      // Si el usuario no está autenticado, mostrar botones de autenticación
+      if (authButtons) {
+        authButtons.style.display = "flex"
+      }
     }
   }
 

@@ -173,6 +173,18 @@ img {
   cursor: pointer;
 }
 
+/* Estilos para los botones de autenticación en la barra de navegación */
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-sm {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
 /* Añadir estilos para el menú de usuario */
 .user-menu {
   position: relative;
@@ -605,6 +617,19 @@ footer {
   .footer-links {
     flex-direction: column;
     gap: 30px;
+  }
+
+  /* Asegurarse de que los botones de autenticación se vean bien en móvil */
+  .auth-buttons {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .auth-buttons .btn {
+    width: 100%;
+    text-align: center;
   }
 }
 
