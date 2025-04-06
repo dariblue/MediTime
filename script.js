@@ -162,8 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let menuItems = `
         <li><a href="recordatorios.html"><i class="fas fa-pills"></i> Mis Recordatorios</a></li>
         <li><a href="calendario.html"><i class="fas fa-calendar-alt"></i> Calendario</a></li>
-        <li><a href="#"><i class="fas fa-user"></i> Mi Perfil</a></li>
-        <li><a href="#"><i class="fas fa-cog"></i> Configuración</a></li>
+        <li><a href="mi-perfil.html"><i class="fas fa-user"></i> Mi Perfil</a></li>
       `
 
       // Añadir enlace al panel de administración si el usuario es administrador
