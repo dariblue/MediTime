@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const registroSuccess = document.getElementById("registro-success")
 
   // API URL
-  const API_URL = "http://localhost:5020"
+  const API_URL = "https://meditime.bestdariblue.tech/api"
 
   // Verificar si el usuario ya está autenticado
   checkAuthentication()
